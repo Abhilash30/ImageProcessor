@@ -1,6 +1,6 @@
 Takes an image -> converts it into numbers -> Performs action on numbers -> outputs image
 
-Image -> data 
+Image -> data
 mathematical operations on matrices.
 Grayscale - heightxwidth
 ColourImages - heightxwidthx3
@@ -66,6 +66,51 @@ Pillow - loading images
 Numpy - convertion to mathematical objects like matrices
 
 Pixelwise operations eg. brightness, inversion, grayscale binary depend only on the input pixel
-convolution - depends on surrounding pixels
+convolution - a dot product between the image(pixel) neighborhood and the kernel.
+We use a (heightxwidthx3) matrix, while convolution the kernel is (k_height, k_width, 1(To maintain RGB values of pixels))
+padding has four types - 0 padding
+
+Numpy treats dimentions as axes
+kernels - Convolution kernels, also called filters, are small matrices used in image processing to modify images and extract important features.
+kernels can be any size, 3x3,1x1, 4,5, 9x9, etc, 3x3 just conviniently happens to keep the output pixel at the centre and have low computation costs
+Odd kernals are preferred because even ones cause spacial shift during padding
+even kernels and pooling are used in CNN's
+Edge Detection & Normalization:
+An edge is a location in an image where pixel intensity changes significantly.
+Horizontal edge → large intensity change in the vertical direction
+Horizontal edge kernel
+-1  -1  -1
+ 0   0   0
++1  +1  +1
+Vertical edge → large intensity change in the horizontal direction
+-1   0  +1
+-1   0  +1
+-1   0  +1
+The magnitude tells you how strong the edge is.
+Laplacian kernel
+-1  -1  -1
+-1   8  -1
+-1  -1  -1
+Large response → the center is significantly different → likely an edge/detail.
+Image
+  ↓
+Convolution
+  ↓
+Numerical result
+  ↓
+Normalization / mapping
+  ↓
+Pixel intensity/color
+Min-max normalization:
+x normalized = (x − xmin/ xmax−xmin ) * 255
+It is a special case of a linear mapping.
+
+Masking is when you overlay an image over another getting a combined result
+
+Selective Gaussian blur noise reduction - low pass filter with edge protection
+	​
 
 
+	​
+
+	​
