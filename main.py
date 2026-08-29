@@ -1,9 +1,13 @@
 from PIL import Image
 import numpy as np
+from image_processor.convolution import Manualconvolution
+from image_processor.filters import KERNELS
+from image_processor.scipy_filters import scipy_convolution
+from scipy import ndimage
+import time
 
-
-im = Image.open("testimg.jpg");
-fade = Image.open("fadeout.jpeg");
+im = Image.open("images/testimg.jpg");
+fade = Image.open("images/fadeout.jpeg");
 fade = fade.resize(im.size)
 print(im.format, im.size, im.mode);
 print("Pillow image: ", im);
@@ -89,56 +93,28 @@ def binaryimg():
 
 #matrix = np.array([[1,2,3,4], [5,6,7,8], [9,10,11,12], [13,14,15,16]])
 
-KERNELS = {
-    "sharpen":   np.array([[0,-1,0],[-1,5,-1],[0,-1,0]]),
-    "box_blur":  np.ones((3,3)) / 9,
-    "emboss":    np.array([[-2,-1,0],[-1,1,1],[0,1,2]]),
-    "testkernel": np.array([[-1,-1,0],[-0,1,0],[0,1,1]]),
-    "horizontal-edge":np.array([[-1,-1,-1],[0,0,0],[1,1,1]]),
-    "vertical-edge":np.array([[-1,0,1],[-1,0,1],[-1,0,1]]),
-    "Laplacian":np.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]),
-    "Gaussian": np.array([[1, 2, 1],[2, 4, 2],[1, 2, 1]]) / 16,
-}
-
-
-def convolution(image_array, kernel):
-    original = Image.fromarray(image_array);
-    original.show()
-    image_array = image_array.astype(np.float32)
-    #calculate padding
-    padding = (kernel.shape[0] - 1)//2
-    padded = np.pad(
-        image_array,
-        ((padding, padding), (padding, padding), (0, 0)),
-        mode='constant',
-        constant_values=0
-    )
-
-    #calculate the dimentions of the output pixels
-    out_h = padded.shape[1] - kernel.shape[1] + 1
-    out_v = padded.shape[0] - kernel.shape[0] + 1
-    output = np.empty((out_v,out_h,3))
-
-    #Here each the image matrix is broken into regions on which convolution is applied f*g where f and g are the image matrix and the kernal
-
-    for i in range(out_v):
-        for j in range(out_h):
-            region = padded[i:i+3, j:j+3,:]
-            output[i][j] = np.sum(region*kernel[:,:,np.newaxis], axis=(0,1))
-
-    output  = np.clip(output, 0, 255)
-    # output = (output - output.min()) / (output.max() - output.min())
-    # output = output * 255 * 0.25  # NORMALIZATION FOR EDGE DETECTION
-    output = output.astype(np.uint8)
-    output_img = Image.fromarray(output)
-    print(output.shape)
-    output_img.show()
+    
 
 def main():
-    convolution(image_array, KERNELS["Gaussian"])
+
+    gray = Getgrayscale().astype(np.float32)
+
+    
+
+    
+
+    start = time.perf_counter()
+    m = Manualconvolution(gray, KERNELS["box_blur"])
+    manual_time = time.perf_counter() - start
 
 
+    start = time.perf_counter()
+    s = scipy_convolution(gray, KERNELS["box_blur"])
+    scipy_time = time.perf_counter() - start
 
+
+    print("Manual:", manual_time)
+    print("SciPy:", scipy_time)
 
 if __name__ == "__main__":
     main()

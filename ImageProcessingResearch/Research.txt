@@ -109,7 +109,157 @@ Masking is when you overlay an image over another getting a combined result
 
 Selective Gaussian blur noise reduction - low pass filter with edge protection
 	​
+Next step:
+Library implementation
+futher concepts
 
+
+IMAGE
+  │
+  ▼
+┌────────────────────┐
+│ Basic processing   │
+│                    │
+│ resize             │
+│ grayscale          │
+│ normalize          │
+│ blur               │
+│ sharpen            │
+└─────────┬──────────┘
+ │
+ ▼
+┌────────────────────┐
+│ Feature extraction │
+│                    │
+│ edges              │
+│ gradients          │
+│ corners            │
+│ contours           │
+└─────────┬──────────┘
+ │
+ ▼
+┌────────────────────┐
+│ Image segmentation │
+│                    │
+│ thresholding       │
+│ morphology         │
+│ connected comps    │
+└─────────┬──────────┘
+ │
+ ▼
+┌────────────────────┐
+│ Object analysis    │
+│                    │
+│ shape              │
+│ area               │
+│ bounding boxes     │
+│ objects            │
+└─────────┬──────────┘
+ │
+ ▼
+┌────────────────────┐
+│ Computer Vision    │
+│                    │
+│ detection          │
+│ tracking            │
+│ recognition        │
+│ OCR                │
+└─────────┬──────────┘
+ │
+ ▼
+┌────────────────────┐
+│ Machine Learning   │
+│                    │
+│ classifiers        │
+│ CNNs               │
+│ object detection  │
+│ segmentation       │
+└────────────────────┘
+
+PHASE 3 — CLASSICAL IMAGE PROCESSING
+─────────────────────────────────────
+thresholding
+morphology
+Gaussian filtering
+gradient operations
+connected components
+contours
+
+
+PHASE 4 — COMPUTER VISION
+──────────────────────────
+geometric transforms
+feature detection
+line detection
+object measurement
+segmentation
+tracking
+
+
+PHASE 5 — OpenCV
+────────────────
+learn the OpenCV equivalents
+build actual CV applications
+
+
+PHASE 6 — MACHINE LEARNING
+──────────────────────────
+scikit-learn
+feature extraction
+classification
+
+
+PHASE 7 — DEEP LEARNING
+───────────────────────
+PyTorch
+CNNs
+object detection
+image segmentation
+OCR
+etc.
+
+FUNDAMENTALS
+     ↓
+NumPy / Pillow
+     ↓
+CONVOLUTION
+     ↓
+SciPy / ndimage
+     ↓
+┌──────────┴──────────┐
+↓                     ↓
+Image processing       Feature extraction
+↓                     ↓
+thresholding             HOG
+morphology               shape
+gradients                texture
+└──────────┬──────────┘
+     ↓
+  OpenCV
+     ↓
+Classical computer vision
+     ↓
+scikit-learn
+     ↓
+ML for images
+     ↓
+PyTorch
+     ↓
+   CNNs
+
+Scilearn implementation
+Image Filter Engine
+
+
+(H, W, C)
+ ↑  ↑  ↑
+ │  │  └── channels
+ │  └───── spatial
+ └──────── spatial
+
+ grayscale (H,W)
+ RGB(H,W,C)
+ RGBA(H,W,C,A)
 
 	​
 
